@@ -1,7 +1,7 @@
 import express  from 'express';
 const router = express.Router();
 
-import { createUser, getUserList, createEercise, getExerciseList } from '../middleware/userController.js';
+import { createUser, getUserList, createEercise, getExerciseList } from '../controllers/userController.js';
 
 router.post('/', (req, res, next) => {
   createUser(req, res, next);

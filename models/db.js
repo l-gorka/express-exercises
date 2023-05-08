@@ -10,7 +10,7 @@ import exerciseModel from './exerciseModel.js';
 const sequelize = new Sequelize({
   dialect: 'sqlite',
   storage: isTestEnv ? 'test.sqlite' : 'db.sqlite',
-  // logging: !isTestEnv
+  logging: !isTestEnv
 });
 
 const db = {};
