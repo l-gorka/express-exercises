@@ -38,6 +38,7 @@ export const getUserList = async (req, res, next) => {
 export const createEercise = async (req, res, next) => {
   const params = {
     ...req.body,
+    date: req.body.date || new Date().toISOString().slice(0, 10),
     userId: req.params.id,
   };
 
@@ -78,6 +79,7 @@ export const getExerciseList = async (req, res, next) => {
         ],
       },
       limit: params.limit || 100,
+      order: [['date', 'ASC']],
     };
 
     const exercises = await db.Exercise.findAll(query);
