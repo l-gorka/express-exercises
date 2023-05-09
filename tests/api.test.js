@@ -17,9 +17,6 @@ beforeAll(async () => {
 
 afterAll(async () => {
   app.close();
-  fs.rmSync('test.sqlite', {
-    force: true,
-  });
 });
 
 describe('user tests', () => {
@@ -63,7 +60,7 @@ describe('user tests', () => {
     const resp = await request(app).post('/api/users').type('json').send({ username: '' });
 
     expect(resp.status).toBe(400);
-    expect(resp.body.error).toBe('username must be at least 2 characters');
+    expect(resp.body.error).toBe('username is required');
   });
 
   test('should not create a new user if the username exceeds 32 characters', async () => {
@@ -123,7 +120,7 @@ describe('exercies tests', () => {
     };
     const resp = await request(app).post(`/api/users/${adminHash}/exercises`).type('json').send(payload);
 
-    delete resp.body.data.id // temporary
+    delete resp.body.data.id; // temporary
 
     expect(resp.status).toBe(201);
     expect(resp.body.data).toStrictEqual({

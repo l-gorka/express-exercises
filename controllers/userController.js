@@ -5,6 +5,10 @@ import { Op } from 'sequelize';
 
 export const createUser = async (req, res, next) => {
   try {
+    if (!req.body.username) {
+      throw { errors: ['username is required'] };
+    }
+
     const params = {
       username: req.body.username,
       id: md5(req.body.username),
@@ -13,7 +17,6 @@ export const createUser = async (req, res, next) => {
     await createUserSchema.validate(params);
 
     const user = await db.User.create(params);
-
     res.status(201).json({ data: user });
   } catch (err) {
     console.error(err);
@@ -51,7 +54,6 @@ export const createEercise = async (req, res, next) => {
 
     res.status(201).json({ data: exercise });
   } catch (err) {
-    console.error('CONTROLLER', err);
     next(err.errors);
   }
 };
