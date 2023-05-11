@@ -82,9 +82,13 @@ export const getExerciseList = async (req, res, next) => {
       order: [['date', 'ASC']],
     };
 
+    const counterQuery = {...query, limit: null, };
+
+    const counter = await db.Exercise.count(counterQuery);
+
     const exercises = await db.Exercise.findAll(query);
 
-    res.status(200).json({ data: exercises, limit: params.limit || 100, entries: exercises.length });
+    res.status(200).json({ data: exercises, limit: params.limit || 100, counter: counter });
   } catch (err) {
     console.error(err);
     next(err.errors);
